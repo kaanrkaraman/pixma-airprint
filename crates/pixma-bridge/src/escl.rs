@@ -116,7 +116,6 @@ pub async fn get_status(State(state): State<AppState>) -> Response {
     let scanning = state.scanning.load(std::sync::atomic::Ordering::Relaxed);
     let status = if scanning { "Processing" } else { "Idle" };
     let job_id = state.active_job_id.lock().await.clone();
-    eprintln!("[escl] GET /eSCL/ScannerStatus -> {status}");
     xml_response(scanner_status_xml(status, job_id.as_deref()))
 }
 
